@@ -1,20 +1,26 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import AccountDetailsScreen from "./features/AccountDetails/AccountDetailsScreen";
-import AccountListScreen from "./features/AccountList/AccountListScreen";
+import AccountDetailsScreen from "./features/account-details/AccountDetailsScreen";
+import AccountListScreen from "./features/account-list/AccountListScreen";
+import AppHeader from "./features/app-header/AppHeader";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const App = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/accountDetails">
-          <AccountDetailsScreen />
-        </Route>
-        <Route path={["/", "/accountsList"]}>
-          <AccountListScreen />
-        </Route>
-      </Switch>
-    </Router>
+    <Fragment>
+      <CssBaseline />
+      <AppHeader />
+      <Router>
+        <Switch>
+          <Route path="/accountDetails">
+            <AccountDetailsScreen />
+          </Route>
+          <Route path={["/", "/accountsList"]}>
+            <AccountListScreen />
+          </Route>
+        </Switch>
+      </Router>
+    </Fragment>
   );
 };
 

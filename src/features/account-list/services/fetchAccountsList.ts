@@ -33,4 +33,5 @@ const fetchAccountsList = (
       } as AccountListFetchFailedEvent),
     ),
   );
+
 export default fetchAccountsList;

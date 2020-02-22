@@ -36,14 +36,14 @@ const AccountsListMachine = Machine<AccountListContext, AccountListStateSchema>(
           src: fetchAccountsList,
         },
         on: {
-          LOBBY_FETCH_SUCCESS: {
-            target: "success",
+          ACCOUNT_LIST_FETCH_SUCCESS: {
+            target: "browsing",
             actions: assign<AccountListContext, AccountListFetchSuccessEvent>({
               accounts: (_, event) => event.data.accounts,
               exchanges: (_, event) => event.data.exchanges,
             }),
           },
-          LOBBY_FETCH_FAILED: {
+          ACCOUNT_LIST_FETCH_FAILED: {
             target: "failure",
             actions: assign<AccountListContext, AccountListFetchFailedEvent>({
               error: (_, event) => event.data,
