@@ -57,6 +57,7 @@ const AccountListScreen = () => {
               <TableCell align="right">Category</TableCell>
               <TableCell align="right">Tag</TableCell>
               <TableCell align="right">Available balance</TableCell>
+              <TableCell align="right">Balance</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -65,6 +66,7 @@ const AccountListScreen = () => {
                 <TableCell component="th" scope="row">
                   Loading...
                 </TableCell>
+                <TableCell align="right">Loading...</TableCell>
                 <TableCell align="right">Loading...</TableCell>
                 <TableCell align="right">Loading...</TableCell>
                 <TableCell align="right">Loading...</TableCell>

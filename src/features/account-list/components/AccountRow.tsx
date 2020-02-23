@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import { BTAccount, ExchangeRate } from "../types/api";
+import { BTAccount, ExchangeRate, Balance } from "../types/api";
 import accountPriceObservable from "../services/accountPriceObservable";
 
 const useStyles = makeStyles({
@@ -21,21 +21,30 @@ type AccountRowProps = {
 const AccountRow = ({ account, exchangeRate }: AccountRowProps) => {
   const classes = useStyles();
   const [balance, setBalance] = useState(account.availableBalance);
+  const [rowBackgroundColor, setRowBackgroundColor] = useState("#fff");
 
   useEffect(() => {
-    const subscriber = accountPriceObservable(
+    const subscriber = accountPriceObservable<Balance>(
       `account-${account.id}`,
-    ).subscribe(val => {
-      setBalance(((val as unknown) as any).balance);
+    ).subscribe(update => {
+      if (update.balance > balance) {
+        setRowBackgroundColor("#00FF00");
+      } else {
+        setRowBackgroundColor("#FF001B");
+      }
+
+      setBalance(update.balance);
+
+      setTimeout(() => setRowBackgroundColor("#fff"), 1000);
     });
 
     return () => {
       subscriber.unsubscribe();
     };
-  }, [account.id]);
+  }, []);
 
   return (
-    <TableRow>
+    <TableRow style={{ backgroundColor: rowBackgroundColor }}>
       <TableCell component="th" scope="row">
         {account.name}
       </TableCell>
@@ -47,8 +56,19 @@ const AccountRow = ({ account, exchangeRate }: AccountRowProps) => {
           <span>
             ${" "}
             {exchangeRate.bitcoin
-              ? exchangeRate.bitcoin * balance
-              : "Not avaialble"}
+              ? (exchangeRate.bitcoin * balance).toFixed(2)
+              : "Not available"}
+          </span>
+        </div>
+      </TableCell>
+      <TableCell align="right">
+        <div className={classes.balance}>
+          <span>{balance} BTC</span>
+          <span>
+            ${" "}
+            {exchangeRate.bitcoin
+              ? (exchangeRate.bitcoin * balance).toFixed(2)
+              : "Not available"}
           </span>
         </div>
       </TableCell>

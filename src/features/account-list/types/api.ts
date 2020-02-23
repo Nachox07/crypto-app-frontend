@@ -3,6 +3,7 @@ export type BTAccount = {
   name: string;
   category: string;
   tag: string;
+  balance: number;
   availableBalance: number;
 };
 
@@ -12,4 +13,8 @@ export type ExchangeRate = {
 
 export type AccountsAPIResponse = {
   accounts: BTAccount[];
+};
+
+export type Balance = {
+  balance: number;
 };
