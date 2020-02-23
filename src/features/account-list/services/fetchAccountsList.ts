@@ -1,8 +1,7 @@
-import { of, Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { ajax } from "rxjs/ajax";
-import { map, catchError } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 import { AccountsAPIResponse } from "../types/api";
-import { AccountListContext } from "./AccountsListMachine";
 
 export type AccountListFetchSuccessEvent = {
   type: "ACCOUNT_LIST_FETCH_SUCCESS";
@@ -14,11 +13,10 @@ export type AccountListFetchFailedEvent = {
   data: string;
 };
 
-const fetchAccountsList = (
-  _: AccountListContext,
-  event: any,
-): Observable<AccountListFetchSuccessEvent | AccountListFetchFailedEvent> =>
-  ajax.getJSON("http://localhost:8080/accounts").pipe(
+const fetchAccountsList = (): Observable<
+  AccountListFetchSuccessEvent | AccountListFetchFailedEvent
+> =>
+  ajax.getJSON<AccountsAPIResponse>("http://localhost:8080/accounts").pipe(
     map(
       response =>
         ({

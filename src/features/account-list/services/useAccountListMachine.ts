@@ -7,8 +7,9 @@ const useAccountListMachine = () => {
   return {
     isInState: accountList.matches,
     accounts: accountList.context.accounts,
-    exchanges: accountList.context.exchanges,
+    exchangeRates: accountList.context.exchangeRates,
     error: accountList.context.error,
+    retry: () => send("RETRY"),
   };
 };
 

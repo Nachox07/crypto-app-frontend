@@ -1,9 +1,13 @@
 import { Machine, assign } from "xstate";
-import { BTAccount, Exchanges } from "../types/api";
+import { BTAccount, ExchangeRate } from "../types/api";
 import fetchAccountsList, {
   AccountListFetchSuccessEvent,
   AccountListFetchFailedEvent,
 } from "./fetchAccountsList";
+import exchangeRateObservable, {
+  ExchangeRateSuccessEvent,
+  ExchangeRateFailedEvent,
+} from "./exchangeRateObservable";
 
 type AccountListStateSchema = {
   states: {
@@ -15,7 +19,7 @@ type AccountListStateSchema = {
 
 export type AccountListContext = {
   accounts: BTAccount[];
-  exchanges: Exchanges;
+  exchangeRates: ExchangeRate;
   error: string | null;
 };
 
@@ -25,7 +29,7 @@ const AccountsListMachine = Machine<AccountListContext, AccountListStateSchema>(
     initial: "pending",
     context: {
       accounts: [],
-      exchanges: {
+      exchangeRates: {
         bitcoin: null,
       },
       error: null,
@@ -40,7 +44,6 @@ const AccountsListMachine = Machine<AccountListContext, AccountListStateSchema>(
             target: "browsing",
             actions: assign<AccountListContext, AccountListFetchSuccessEvent>({
               accounts: (_, event) => event.data.accounts,
-              exchanges: (_, event) => event.data.exchanges,
             }),
           },
           ACCOUNT_LIST_FETCH_FAILED: {
@@ -51,7 +54,24 @@ const AccountsListMachine = Machine<AccountListContext, AccountListStateSchema>(
           },
         },
       },
-      browsing: {},
+      browsing: {
+        invoke: {
+          src: () => exchangeRateObservable,
+        },
+        on: {
+          EXCHANGE_UPDATE_SUCCESS: {
+            actions: assign<AccountListContext, ExchangeRateSuccessEvent>({
+              exchangeRates: (_, event) => event.data,
+            }),
+          },
+          EXCHANGE_UPDATE_FAILED: {
+            target: "failure",
+            actions: assign<AccountListContext, ExchangeRateFailedEvent>({
+              error: (_, event) => event.data,
+            }),
+          },
+        },
+      },
       failure: {
         on: { RETRY: "pending" },
       },

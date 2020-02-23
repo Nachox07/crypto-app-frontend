@@ -1,4 +1,4 @@
-import React from "react";
+import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -6,9 +6,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import useAccountListMachine from "./services/useAccountListMachine";
+import React from "react";
 import AccountRow from "./components/AccountRow";
+import useAccountListMachine from "./services/useAccountListMachine";
 
 const useStyles = makeStyles({
   container: {
@@ -27,13 +27,27 @@ const useStyles = makeStyles({
 });
 
 const AccountListScreen = () => {
-  const { isInState, accounts, error, exchanges } = useAccountListMachine();
+  const {
+    isInState,
+    accounts,
+    error,
+    exchangeRates,
+    retry,
+  } = useAccountListMachine();
   const classes = useStyles();
+
+  if (isInState("failure")) {
+    return (
+      <Paper className={classes.exchange}>
+        Error: {error} <button onClick={retry}>Retry</button>
+      </Paper>
+    );
+  }
 
   return (
     <div className={classes.container}>
       <Paper className={classes.exchange}>
-        Bitcoin exchange: not available
+        Bitcoin exchange: {exchangeRates?.bitcoin ?? "not available"}
       </Paper>
       <TableContainer className={classes.tableContainer} component={Paper}>
         <Table aria-label="simple table">
@@ -53,10 +67,16 @@ const AccountListScreen = () => {
                 </TableCell>
                 <TableCell align="right">Loading...</TableCell>
                 <TableCell align="right">Loading...</TableCell>
-                <TableCell align="right">Loading...</TableCell>{" "}
+                <TableCell align="right">Loading...</TableCell>
               </TableRow>
             ) : (
-              accounts.map(account => <AccountRow account={account} />)
+              accounts.map(account => (
+                <AccountRow
+                  key={account.id}
+                  account={account}
+                  exchangeRate={exchangeRates}
+                />
+              ))
             )}
           </TableBody>
         </Table>

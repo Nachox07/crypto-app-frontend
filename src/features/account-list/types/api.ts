@@ -1,15 +1,15 @@
 export type BTAccount = {
+  id: string;
   name: string;
   category: string;
   tag: string;
   availableBalance: number;
 };
 
-export type Exchanges = {
+export type ExchangeRate = {
   bitcoin: number | null;
 };
 
 export type AccountsAPIResponse = {
   accounts: BTAccount[];
-  exchanges: Exchanges;
 };
