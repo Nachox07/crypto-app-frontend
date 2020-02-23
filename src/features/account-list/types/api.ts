@@ -1,5 +1,5 @@
 export type BTAccount = {
-  id: string;
+  accountId: string;
   name: string;
   category: string;
   tag: string;

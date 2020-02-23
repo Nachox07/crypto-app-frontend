@@ -12,7 +12,7 @@ const App = () => {
       <AppHeader />
       <Router>
         <Switch>
-          <Route path="/accountDetails">
+          <Route path="/accountDetails/:accountId">
             <AccountDetailsScreen />
           </Route>
           <Route path={["/", "/accountsList"]}>

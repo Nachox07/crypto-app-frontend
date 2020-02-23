@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import { BTAccount, ExchangeRate, Balance } from "../types/api";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import accountPriceObservable from "../services/accountPriceObservable";
+import { BTAccount, ExchangeRate } from "../types/api";
 
 const useStyles = makeStyles({
   balance: {
@@ -11,21 +12,26 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
   },
+  tableRow: {
+    cursor: "pointer",
+  },
 });
 
 type AccountRowProps = {
   account: BTAccount;
-  exchangeRate: ExchangeRate;
+  exchangeRates: ExchangeRate;
 };
 
-const AccountRow = ({ account, exchangeRate }: AccountRowProps) => {
+const AccountRow = ({ account, exchangeRates }: AccountRowProps) => {
   const classes = useStyles();
-  const [balance, setBalance] = useState(account.availableBalance);
+  const history = useHistory();
+  const { accountId } = account;
+  const [balance, setBalance] = useState(account.balance);
   const [rowBackgroundColor, setRowBackgroundColor] = useState("#fff");
 
   useEffect(() => {
-    const subscriber = accountPriceObservable<Balance>(
-      `account-${account.id}`,
+    const subscriber = accountPriceObservable(
+      `account-${account.accountId}`,
     ).subscribe(update => {
       if (update.balance > balance) {
         setRowBackgroundColor("#00FF00");
@@ -41,10 +47,15 @@ const AccountRow = ({ account, exchangeRate }: AccountRowProps) => {
     return () => {
       subscriber.unsubscribe();
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountId]);
 
   return (
-    <TableRow style={{ backgroundColor: rowBackgroundColor }}>
+    <TableRow
+      className={classes.tableRow}
+      style={{ backgroundColor: rowBackgroundColor }}
+      onClick={() => history.push(`/accountDetails/${accountId}`)}
+    >
       <TableCell component="th" scope="row">
         {account.name}
       </TableCell>
@@ -55,8 +66,8 @@ const AccountRow = ({ account, exchangeRate }: AccountRowProps) => {
           <span>{balance} BTC</span>
           <span>
             ${" "}
-            {exchangeRate.bitcoin
-              ? (exchangeRate.bitcoin * balance).toFixed(2)
+            {exchangeRates.bitcoin
+              ? (exchangeRates.bitcoin * balance).toFixed(10)
               : "Not available"}
           </span>
         </div>
@@ -66,8 +77,8 @@ const AccountRow = ({ account, exchangeRate }: AccountRowProps) => {
           <span>{balance} BTC</span>
           <span>
             ${" "}
-            {exchangeRate.bitcoin
-              ? (exchangeRate.bitcoin * balance).toFixed(2)
+            {exchangeRates.bitcoin
+              ? (exchangeRates.bitcoin * balance).toFixed(10)
               : "Not available"}
           </span>
         </div>

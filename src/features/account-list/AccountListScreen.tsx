@@ -1,12 +1,13 @@
-import Paper from "@material-ui/core/Paper";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import React from "react";
 import AccountRow from "./components/AccountRow";
 import useAccountListMachine from "./services/useAccountListMachine";
 
@@ -16,6 +17,10 @@ const useStyles = makeStyles({
     justifyContent: "center",
     display: "flex",
     flexDirection: "column",
+  },
+  error: {
+    margin: 30,
+    padding: 20,
   },
   exchange: {
     margin: 30,
@@ -38,8 +43,8 @@ const AccountListScreen = () => {
 
   if (isInState("failure")) {
     return (
-      <Paper className={classes.exchange}>
-        Error: {error} <button onClick={retry}>Retry</button>
+      <Paper className={classes.error}>
+        Error: {error} <Button onClick={retry}>Retry</Button>
       </Paper>
     );
   }
@@ -74,9 +79,9 @@ const AccountListScreen = () => {
             ) : (
               accounts.map(account => (
                 <AccountRow
-                  key={account.id}
+                  key={account.accountId}
                   account={account}
-                  exchangeRate={exchangeRates}
+                  exchangeRates={exchangeRates}
                 />
               ))
             )}
