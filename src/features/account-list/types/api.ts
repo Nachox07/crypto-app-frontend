@@ -1,3 +1,12 @@
+export type Transaction = {
+  confirmedDate: Date;
+  orderId: string;
+  orderCode: string;
+  transactionType: string;
+  credit: string;
+  balance: string;
+};
+
 export type BTAccount = {
   accountId: string;
   name: string;
@@ -5,6 +14,7 @@ export type BTAccount = {
   tag: string;
   balance: number;
   availableBalance: number;
+  transactions: Transaction[];
 };
 
 export type ExchangeRate = {

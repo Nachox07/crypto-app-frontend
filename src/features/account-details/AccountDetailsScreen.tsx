@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import React, { useEffect, useState } from "react";
 import accountPriceObservable from "../account-list/services/accountPriceObservable";
 import useAccountDetailsMachine from "./services/useAccountDetailsMachine";
+import TransactionRow from "./components/TransactionRow";
 
 const useStyles = makeStyles({
   container: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
   },
   tableContainer: {
-    maxWidth: 850,
+    maxWidth: 1000,
   },
   root: {
     minWidth: 475,
@@ -98,6 +99,8 @@ const AccountDetailsScreen = () => {
     );
   }
 
+  const { transactions } = account;
+
   return (
     <div className={classes.container}>
       <Card className={classes.root}>
@@ -155,7 +158,15 @@ const AccountDetailsScreen = () => {
                 <TableCell align="right">Loading...</TableCell>
                 <TableCell align="right">Loading...</TableCell>
               </TableRow>
-            ) : null}
+            ) : (
+              transactions.map(transaction => (
+                <TransactionRow
+                  key={transaction.orderId}
+                  transaction={transaction}
+                  exchangeRates={exchangeRates}
+                />
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>
