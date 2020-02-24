@@ -19,12 +19,14 @@ describe("subscribeToTopic", () => {
     socketOn.mockImplementationOnce((_: string, callback: OnCallback) => {
       messageCallback = callback;
     });
+
     subscribeToTopic("foo").subscribe({
       next(value) {
         expect(value).toEqual("test message");
         done();
       },
     });
+
     messageCallback("test message");
   });
 

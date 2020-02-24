@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import useAccountDetailsMachine from "./services/useAccountDetailsMachine";
+import Typography from "@material-ui/core/Typography";
+import React, { useEffect, useState } from "react";
 import accountPriceObservable from "../account-list/services/accountPriceObservable";
-import { Balance } from "../account-list/types/api";
+import useAccountDetailsMachine from "./services/useAccountDetailsMachine";
 
 const useStyles = makeStyles({
   container: {
@@ -33,11 +32,6 @@ const useStyles = makeStyles({
   error: {
     margin: 30,
     padding: 20,
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
   },
   title: {
     fontSize: 14,
@@ -75,8 +69,8 @@ const AccountDetailsScreen = () => {
   useEffect(() => {
     console.log(balance);
     if (account) {
-      const subscriber = accountPriceObservable<Balance>(
-        `account-${account.id}`,
+      const subscriber = accountPriceObservable(
+        `account-${account.accountId}`,
       ).subscribe(update => {
         if (update.balance > balance) {
           setHeaderClass("upRate");

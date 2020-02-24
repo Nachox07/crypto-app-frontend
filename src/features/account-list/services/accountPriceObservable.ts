@@ -1,6 +1,7 @@
 import subscribeToTopic from "../../../sdk/websocketUtils/subscribeToTopic";
+import { BTAccount } from "../types/api";
 
-const accountPriceObservable = <T>(accountId: string) =>
-  subscribeToTopic<T>(accountId);
+const accountPriceObservable = (accountId: string) =>
+  subscribeToTopic<{ balance: BTAccount["balance"] }>(accountId);
 
 export default accountPriceObservable;
