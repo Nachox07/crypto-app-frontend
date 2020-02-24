@@ -20,7 +20,7 @@ type AccountListStateSchema = {
 export type AccountDetailsContext = {
   data: BTAccount | null;
   exchangeRates: ExchangeRate;
-  error: string | null;
+  error: { message: string } | null;
 };
 
 const AccountsListMachine = Machine<

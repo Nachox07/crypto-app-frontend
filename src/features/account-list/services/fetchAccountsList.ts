@@ -10,7 +10,7 @@ export type AccountListFetchSuccessEvent = {
 
 export type AccountListFetchFailedEvent = {
   type: "ACCOUNT_LIST_FETCH_FAILED";
-  data: string;
+  data: { message: string };
 };
 
 const fetchAccountsList = (): Observable<

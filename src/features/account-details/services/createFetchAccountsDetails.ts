@@ -10,7 +10,7 @@ export type AccountDetailsFetchSuccessEvent = {
 
 export type AccountDetailsFetchFailedEvent = {
   type: "ACCOUNT_LIST_FETCH_FAILED";
-  data: string;
+  data: { message: string };
 };
 
 const createFetchAccountsDetails = (
@@ -38,7 +38,7 @@ const createFetchAccountsDetails = (
         )
     : of({
         type: "ACCOUNT_LIST_FETCH_FAILED",
-        data: "Invalid account id",
+        data: { message: "Invalid account id" },
       });
 
 export default createFetchAccountsDetails;

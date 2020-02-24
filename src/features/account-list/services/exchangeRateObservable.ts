@@ -10,7 +10,7 @@ export type ExchangeRateSuccessEvent = {
 
 export type ExchangeRateFailedEvent = {
   type: "EXCHANGE_UPDATE_FAILED";
-  data: string;
+  data: { message: string };
 };
 
 const exchangeRateObservable = subscribeToTopic<{

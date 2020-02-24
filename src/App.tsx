@@ -9,8 +9,8 @@ const App = () => {
   return (
     <Fragment>
       <CssBaseline />
-      <AppHeader />
       <Router>
+        <AppHeader />
         <Switch>
           <Route path="/accountDetails/:accountId">
             <AccountDetailsScreen />

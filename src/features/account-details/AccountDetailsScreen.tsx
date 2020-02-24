@@ -93,7 +93,7 @@ const AccountDetailsScreen = () => {
   if (isInState("failure") || !account) {
     return (
       <Paper className={classes.error}>
-        Error: {error} <Button onClick={retry}>Retry</Button>
+        Error: {error?.message} <Button onClick={retry}>Retry</Button>
       </Paper>
     );
   }
