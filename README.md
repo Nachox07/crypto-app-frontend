@@ -11,9 +11,9 @@ This repository contains a React app that looks like a sample of a cryptocurrenc
 
 ## Installation
 
-Firstly all the dependencies need to be installed, as this is a JS project you need `node` plus a dependency installer, the preference here is `yarn`
+Firstly all the dependencies need to be installed, as this is a JS project `node` is necessary plus a dependency installer, the preference here is `yarn`
 
-Once these tools are installed you need to run on the project folder:
+Once these tools are installed you need to run on the project folder for dependencies installation:
 
 `yarn`
 
@@ -23,8 +23,18 @@ First, the backend must be running or even a mock server on the port `8080`, the
 
 Once it is running, you just need to run `yarn start`
 
+Now it should open a browser tab on `http://localhost:3000`
+
 ## Testing
+
+### Unit testing
 
 The command to run the unit tests is:
 
 `yarn test`
+
+## Integration testing
+
+The following command open Cypress with the available suites:
+
+`yarn cypress:open`

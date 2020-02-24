@@ -38,7 +38,10 @@ const TransactionRow = ({
       <TableCell align="right">{orderCode}</TableCell>
       <TableCell align="right">{transactionType}</TableCell>
       <TableCell align="right">
-        <div className={classes.balance}>
+        <div
+          data-testid={`transaction-${orderId}-balance`}
+          className={classes.balance}
+        >
           <span>{credit} BTC</span>
           <span>
             ${" "}

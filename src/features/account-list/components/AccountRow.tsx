@@ -62,7 +62,10 @@ const AccountRow = ({ account, exchangeRates }: AccountRowProps) => {
       <TableCell align="right">{account.category}</TableCell>
       <TableCell align="right">{account.tag}</TableCell>
       <TableCell align="right">
-        <div className={classes.balance}>
+        <div
+          data-testid={`account-${accountId}-balance`}
+          className={classes.balance}
+        >
           <span>{balance} BTC</span>
           <span>
             ${" "}
