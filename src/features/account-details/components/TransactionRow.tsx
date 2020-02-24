@@ -10,9 +10,6 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
   },
-  tableRow: {
-    cursor: "pointer",
-  },
 });
 
 type TransactionRowProps = {
@@ -35,7 +32,7 @@ const TransactionRow = ({
   } = transaction;
 
   return (
-    <TableRow className={classes.tableRow}>
+    <TableRow>
       <TableCell align="right">{confirmedDate}</TableCell>
       <TableCell align="right">{orderId.toUpperCase()}</TableCell>
       <TableCell align="right">{orderCode}</TableCell>

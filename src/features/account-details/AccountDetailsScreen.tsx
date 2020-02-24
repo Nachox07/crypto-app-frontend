@@ -68,7 +68,6 @@ const AccountDetailsScreen = () => {
   }, [account]);
 
   useEffect(() => {
-    console.log(balance);
     if (account) {
       const subscriber = accountPriceObservable(
         `account-${account.accountId}`,
