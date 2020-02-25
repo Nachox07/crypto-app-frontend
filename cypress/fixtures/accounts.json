@@ -1,0 +1,132 @@
+{
+  "accounts": [
+    {
+      "accountId": "1",
+      "name": "Investment Account",
+      "category": "e-markets",
+      "tag": "Implementation",
+      "balance": "767.45436637",
+      "availableBalance": "767.45436637"
+    },
+    {
+      "accountId": "2",
+      "name": "Checking Account",
+      "category": "Handcrafted",
+      "tag": "capacitor",
+      "balance": "3383.25741006",
+      "availableBalance": "3383.25741006"
+    },
+    {
+      "accountId": "3",
+      "name": "Checking Account",
+      "category": "Berkshire",
+      "tag": "Colorado",
+      "balance": "2845.07325787",
+      "availableBalance": "2845.07325787"
+    },
+    {
+      "accountId": "4",
+      "name": "Personal Loan Account",
+      "category": "Data",
+      "tag": "Research",
+      "balance": "3086.72134247",
+      "availableBalance": "3086.72134247"
+    },
+    {
+      "accountId": "5",
+      "name": "Checking Account",
+      "category": "Centralized",
+      "tag": "European Unit of Account 9(E.U.A.-9)",
+      "balance": "4090.80971131",
+      "availableBalance": "4090.80971131"
+    },
+    {
+      "accountId": "6",
+      "name": "Auto Loan Account",
+      "category": "hacking",
+      "tag": "program",
+      "balance": "6188.02511044",
+      "availableBalance": "6188.02511044"
+    },
+    {
+      "accountId": "7",
+      "name": "Credit Card Account",
+      "category": "web-readiness",
+      "tag": "Fields",
+      "balance": "2158.75885818",
+      "availableBalance": "2158.75885818"
+    },
+    {
+      "accountId": "8",
+      "name": "Personal Loan Account",
+      "category": "Self-enabling",
+      "tag": "California",
+      "balance": "2884.13162691",
+      "availableBalance": "2884.13162691"
+    },
+    {
+      "accountId": "9",
+      "name": "Savings Account",
+      "category": "Grocery",
+      "tag": "Spurs",
+      "balance": "7228.68932256",
+      "availableBalance": "7228.68932256"
+    },
+    {
+      "accountId": "10",
+      "name": "Savings Account",
+      "category": "Identity",
+      "tag": "models",
+      "balance": "7520.17536600",
+      "availableBalance": "7520.17536600"
+    },
+    {
+      "accountId": "11",
+      "name": "Money Market Account",
+      "category": "Industrial",
+      "tag": "synthesize",
+      "balance": "3676.01004396",
+      "availableBalance": "3676.01004396"
+    },
+    {
+      "accountId": "12",
+      "name": "Auto Loan Account",
+      "category": "Assistant",
+      "tag": "Gorgeous Concrete Chicken",
+      "balance": "3637.47553171",
+      "availableBalance": "3637.47553171"
+    },
+    {
+      "accountId": "13",
+      "name": "Home Loan Account",
+      "category": "bottom-line",
+      "tag": "channels",
+      "balance": "4847.57469963",
+      "availableBalance": "4847.57469963"
+    },
+    {
+      "accountId": "14",
+      "name": "Auto Loan Account",
+      "category": "static",
+      "tag": "Supervisor",
+      "balance": "8371.45100261",
+      "availableBalance": "8371.45100261"
+    },
+    {
+      "accountId": "15",
+      "name": "Money Market Account",
+      "category": "Books",
+      "tag": "Rhode Island",
+      "balance": "169.64059450",
+      "availableBalance": "169.64059450"
+    },
+    {
+      "accountId": "16",
+      "name": "Personal Loan Account",
+      "category": "online",
+      "tag": "Drive",
+      "balance": "7658.05196457",
+      "availableBalance": "7658.05196457"
+    }
+  ]
+}

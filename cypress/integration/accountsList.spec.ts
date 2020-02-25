@@ -1,26 +1,75 @@
 /// <reference types="cypress" />
 
+const mockSuccessResponse = () =>
+  cy
+    .route({
+      method: "GET",
+      url: "**/accounts",
+      status: 200,
+      response: "fixture:accounts.json",
+    })
+    .as("accountFetch");
+
 context("Account list", () => {
-  beforeEach(() => {
-    cy.visit("http://localhost:3000");
+  describe("success", () => {
+    beforeEach(() => {
+      cy.server();
+
+      mockSuccessResponse();
+
+      cy.visit("http://localhost:3000");
+    });
+
+    it("renders at least 15 accounts", () => {
+      cy.wait("@accountFetch");
+
+      cy.get("table")
+        .find("[data-testid^=account-]")
+        .should("have.length.gte", 15);
+    });
+
+    it("navigates to account details page when an account is clicked", () => {
+      cy.get("table")
+        .find("[data-testid^=account-]")
+        .first()
+        .click();
+
+      cy.location("pathname").should("include", "/accountDetails/");
+
+      cy.get("table")
+        .find("[data-testid^=transaction-]")
+        .should("exist");
+    });
   });
 
-  it("renders at least 15 accounts", () => {
-    cy.get("table")
-      .find("[data-testid^=account-]")
-      .should("have.length.gte", 15);
-  });
+  describe("error", () => {
+    beforeEach(() => {
+      cy.server();
 
-  it("navigates to account details page when an account is clicked", () => {
-    cy.get("table")
-      .find("[data-testid^=account-]")
-      .first()
-      .click();
+      cy.route({
+        method: "GET",
+        url: "**/accounts",
+        status: 400,
+        response: {},
+      }).as("accountFetchError");
 
-    cy.location("pathname").should("include", "/accountDetails/");
+      cy.visit("http://localhost:3000");
+    });
 
-    cy.get("table")
-      .find("[data-testid^=transaction-]")
-      .should("exist");
+    it("shows error and retry button works", () => {
+      cy.wait("@accountFetchError");
+
+      mockSuccessResponse();
+
+      cy.get("button")
+        .should("exist")
+        .click();
+
+      cy.wait("@accountFetch");
+
+      cy.get("table")
+        .find("[data-testid^=account-]")
+        .should("have.length.gte", 15);
+    });
   });
 });
