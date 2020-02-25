@@ -11,65 +11,81 @@ const mockSuccessAccountsResponse = () =>
     .as("accountFetch");
 
 context("Account list", () => {
-  describe("success", () => {
-    beforeEach(() => {
-      cy.server();
+  describe("mocking requests", () => {
+    describe("success", () => {
+      beforeEach(() => {
+        cy.server();
 
-      mockSuccessAccountsResponse();
+        mockSuccessAccountsResponse();
 
-      cy.visit("http://localhost:3000");
+        cy.visit("http://localhost:3000");
+      });
+
+      it("renders at least 15 accounts", () => {
+        cy.wait("@accountFetch");
+
+        cy.get("table")
+          .find("[data-testid^=account-]")
+          .should("have.length.gte", 15);
+      });
+
+      it("navigates to account details page when an account is clicked", () => {
+        cy.get("table")
+          .find("[data-testid^=account-]")
+          .first()
+          .click();
+
+        cy.location("pathname").should("include", "/accountDetails/");
+
+        cy.get("table")
+          .find("[data-testid^=transaction-]")
+          .should("exist");
+      });
     });
 
-    it("renders at least 15 accounts", () => {
-      cy.wait("@accountFetch");
+    describe("error", () => {
+      beforeEach(() => {
+        cy.server();
 
-      cy.get("table")
-        .find("[data-testid^=account-]")
-        .should("have.length.gte", 15);
-    });
+        cy.route({
+          method: "GET",
+          url: "**/accounts",
+          status: 400,
+          response: {},
+        }).as("accountFetchError");
 
-    it("navigates to account details page when an account is clicked", () => {
-      cy.get("table")
-        .find("[data-testid^=account-]")
-        .first()
-        .click();
+        cy.visit("http://localhost:3000");
+      });
 
-      cy.location("pathname").should("include", "/accountDetails/");
+      it("shows error and retry button works", () => {
+        cy.wait("@accountFetchError");
 
-      cy.get("table")
-        .find("[data-testid^=transaction-]")
-        .should("exist");
+        mockSuccessAccountsResponse();
+
+        cy.get("button")
+          .should("exist")
+          .click();
+
+        cy.wait("@accountFetch");
+
+        cy.get("table")
+          .find("[data-testid^=account-]")
+          .should("exist");
+      });
     });
   });
 
-  describe("error", () => {
-    beforeEach(() => {
-      cy.server();
+  describe("without mocking requests", () => {
+    describe("success", () => {
+      beforeEach(() => {
+        cy.visit("http://localhost:3000/");
+      });
 
-      cy.route({
-        method: "GET",
-        url: "**/accounts",
-        status: 400,
-        response: {},
-      }).as("accountFetchError");
-
-      cy.visit("http://localhost:3000");
-    });
-
-    it("shows error and retry button works", () => {
-      cy.wait("@accountFetchError");
-
-      mockSuccessAccountsResponse();
-
-      cy.get("button")
-        .should("exist")
-        .click();
-
-      cy.wait("@accountFetch");
-
-      cy.get("table")
-        .find("[data-testid^=account-]")
-        .should("exist");
+      it("renders at least 15 accounts", () => {
+        cy.get("table")
+          .find("[data-testid^=account-]")
+          .should("have.length.gte", 15);
+      });
     });
   });
 });

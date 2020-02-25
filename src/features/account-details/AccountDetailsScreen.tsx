@@ -10,7 +10,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import accountPriceObservable from "../account-list/services/accountPriceObservable";
 import useAccountDetailsMachine from "./services/useAccountDetailsMachine";
 import TransactionRow from "./components/TransactionRow";
@@ -93,7 +93,10 @@ const AccountDetailsScreen = () => {
   if (isInState("failure") || !account) {
     return (
       <Paper className={classes.error}>
-        Error: {error?.message} <Button onClick={retry}>Retry</Button>
+        <Fragment>
+          <span data-testid="error-message">Error: {error?.message}</span>{" "}
+          <Button onClick={retry}>Retry</Button>
+        </Fragment>
       </Paper>
     );
   }
