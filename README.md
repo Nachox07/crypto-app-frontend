@@ -1,13 +1,37 @@
 # crypto-app-frontend
 
-## Quick introduction
+## Project description
 
-This repository contains a React app that looks like a sample of a cryptocurrency website. It connects to a backend compose by a restful API and WebSockets in order to render fake data in real-time. The tech stack is the following:
+This project is about a cryptocurrencies-like website. Here is a description of the features it contains:
+
+### Main accounts page
+
+- This a page which is showing a list of accounts/wallets, like an administration panel from a user.
+- Each account has a balance in Bitcoin (BTC), it should display the balance in dollars given an exchange rate of the BTC to \$ by WebSocket at any time.
+- When a new exchange is pushed, it updates each account balance. Also, the account balance may change in the time, it will update the balance in real change and notifying in the following way:
+  - Red colour when the balance is lower than before
+  - Green colour when the balance is higher than before
+- Each account is a clickable element that will open a new page without refreshing with account details
+
+### Account details page
+
+- This is a page which is showing the details from a given account ID
+- It should display a list of transactions attached to the given account
+- It shows the balance which as before is changed by the exchange rate update and flash a different colour depending on the balance update
+
+### App header
+
+- Top bar component that allows the user to return to the home view
+
+## Architecture introduction
+
+This repository contains a React app which connects to a backend compose by a restful API and WebSockets in order to render the fakr data in real-time. The tech stack is the following:
 
 - React with Typescript
 - Material UI as components library
 - Xstate and RxJS for business logic and networking
 - socket.io client
+- Automation testing with Cypress and Jest
 
 ## Installation
 
