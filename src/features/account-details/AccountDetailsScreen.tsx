@@ -109,7 +109,7 @@ const AccountDetailsScreen = () => {
             color="textSecondary"
             gutterBottom
           >
-            {account.name}
+            <span data-testid="account-name">{account.name}</span>
           </Typography>
           <Typography
             className={classes[headerClass]}

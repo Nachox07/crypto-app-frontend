@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const mockSuccessResponse = () =>
+const mockSuccessAccountsResponse = () =>
   cy
     .route({
       method: "GET",
@@ -15,7 +15,7 @@ context("Account list", () => {
     beforeEach(() => {
       cy.server();
 
-      mockSuccessResponse();
+      mockSuccessAccountsResponse();
 
       cy.visit("http://localhost:3000");
     });
@@ -59,7 +59,7 @@ context("Account list", () => {
     it("shows error and retry button works", () => {
       cy.wait("@accountFetchError");
 
-      mockSuccessResponse();
+      mockSuccessAccountsResponse();
 
       cy.get("button")
         .should("exist")
@@ -69,7 +69,7 @@ context("Account list", () => {
 
       cy.get("table")
         .find("[data-testid^=account-]")
-        .should("have.length.gte", 15);
+        .should("exist");
     });
   });
 });
